@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hora e Minuto</title>
+
+    <script>
+        for (var hora = 0; hora < 24; hora++){
+            for (var minuto = 0; minuto < 60; minuto++) {
+                for (var segundo = 0; segundo < 60; segundo++) {
+                    var horacerta = hora;
+                    var minutocerto = minuto;
+                    var segundocerto = segundo;
+
+                    if (hora < 10) {
+                        horacerta = "0" + hora;
+                    }
+                    if (minuto < 10) {
+                        minutocerto = "0" + minuto;
+                    }
+                    if (segundo < 10) {
+                        segundocerto = "0" + segundo;
+                    }
+
+                    document.write(horacerta + ":" + minutocerto + ":" + segundocerto + "<br> ");
+
+                } //Laço do segundo
+            } //Laço do minuto
+        } //Laço da hora
+    </script>
+
+</head>
+
+<body>
+    
+</body>
+
+</html>
