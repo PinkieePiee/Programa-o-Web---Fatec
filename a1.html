@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/download (7).png" type="imagem/png">
     <title>Avaliação</title>
 
     <style>
@@ -11,6 +12,8 @@
             background: rgb(245,188,213);
             background: radial-gradient(circle, rgba(245,188,213,1) 19%, rgba(255,242,164,1) 100%);
         }
+
+        /* Edição do fundo em degradê no formato circular*/
 
         h1 {
             color:ghostwhite;
@@ -22,35 +25,71 @@
             text-align: center;
         }
 
+        /* Edição da título do site*/
+
         .jumbotron {
-            background-color: rgba(147, 112, 216, 0.589);
+            background-color: #fd94b585;
             height: 350px;
             width: 1780px;
             border-radius: 15px;
             margin-left: 10px;
             margin-right: 10px;
+            justify-items: center;
         }
+
+        /* Edição do retângulo ao redor da Sailor, ele delimita o espaço onde a mesma pode caminhar */
+
+        .img {
+            margin-top: 100px;
+        }
+
+        /* Centralizei mais a imagem a sailor dentro da jumbotron */
+
+        .logo {
+            position: fixed;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            bottom: 0;
+        } 
+
+        /* Edição para o logo ficar centralizado e ao fim da página */
+
+        .loguinho {
+            height: 100px;
+        }
+
+        /* Alterei o tamanho da figura de logo*/
 
         #sailor {
-
+            position: absolute;
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            width: 1000px;
+            height: 100px;
         }
 
-        #sailor:hover {
-            
-        }
+        /* Centralizei a div e delimitei um tamanho*/
 
     </style>
 
     <script>
+        
+        alert("Use os botões de setinha do teclado para movimentar a Sailor!");
 
-    function sailore() {
-        document.getElementById("sailor").src="img/sailor";
-    }
+        /*Aviso inicial que dá as instruções ao usuário */
 
-    function sailord(){
-        document.getElementById("sailor").src="img/sailor-d";
-    }
+        const sailor = document.getElementById("sailor");
+        
+        /* Criei uma variável que vai conter a div onde a imagem da sailor está dentro. Ela foi criada como constante, então não pode ser alterada */
 
+        let positionX = 50;
+        let positionY = 50;
+
+
+    
     </script>
 
     <!-- Cntrl + ; transforma a linha em um comentário-->
@@ -63,8 +102,12 @@
 
     <div class="jumbotron">
         <div id="sailor">
-            <img src="img/sailor-d.png" alt="Sailor moon diva!" onkeydown="">
+            <img class="img" src="img/sailor-f-c.png" alt="Sailor moon diva!">
         </div>
+    </div>
+
+    <div class="logo">
+        <img class="loguinho" src="img/download (7).png" alt="logo da Sailor">
     </div>
 
 </body>
