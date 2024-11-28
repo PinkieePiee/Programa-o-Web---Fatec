@@ -22,7 +22,36 @@
             text-align: center;
         }
 
+        .jumbotron {
+            background-color: rgba(147, 112, 216, 0.589);
+            height: 350px;
+            width: 1780px;
+            border-radius: 15px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        #sailor {
+
+        }
+
+        #sailor:hover {
+            
+        }
+
     </style>
+
+    <script>
+
+    function sailore() {
+        document.getElementById("sailor").src="img/sailor";
+    }
+
+    function sailord(){
+        document.getElementById("sailor").src="img/sailor-d";
+    }
+
+    </script>
 
     <!-- Cntrl + ; transforma a linha em um comentário-->
 
@@ -32,8 +61,10 @@
 
     <h1>Avaliação</h1>
 
-    <div id="sailor">
-        <img src="" alt="">
+    <div class="jumbotron">
+        <div id="sailor">
+            <img src="img/sailor-d.png" alt="Sailor moon diva!" onkeydown="">
+        </div>
     </div>
 
 </body>
