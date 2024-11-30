@@ -9,15 +9,15 @@
     <style>
 
         body {
-            background: rgb(245,188,213);
-            background: radial-gradient(circle, rgba(245,188,213,1) 19%, rgba(255,242,164,1) 100%);
+            background: rgb(238,174,202);
+            background: radial-gradient(circle, rgba(238,174,202,1) 25%, rgba(148,187,233,1) 100%);
         }
 
         /* Edição do fundo em degradê no formato circular*/
 
         h1 {
             color:ghostwhite;
-            font-size: 60px;
+            font-size: 40px;
             font-family:Georgia, 'Times New Roman', Times, serif;
             font-style: italic;
             letter-spacing: 1px;
@@ -30,17 +30,15 @@
         .jumbotron {
             position: relative;
             background-color: #fd94b585;
-            height: 350px;
-            width: 1780px;
+            height: 300px;
+            width: 106%;
             border-radius: 15px;
-            margin-left: 10px;
-            margin-right: 10px;
         }
 
         /* Edição do retângulo ao redor da Sailor, ele delimita o espaço onde a mesma pode caminhar */
 
         .img {
-            margin-top: 50px;
+            margin-top: 10px;
         }
 
         /* Centralizei mais a imagem da sailor dentro da jumbotron */
@@ -57,7 +55,7 @@
         /* Edição para o logo ficar centralizado e ao fim da página */
 
         .loguinho {
-            height: 100px;
+            height: 50px;
         }
 
         /* Alterei o tamanho da figura de logo*/
@@ -79,42 +77,90 @@
         
         alert("Use os botões de setinha do teclado para movimentar a Sailor!");
 
-        /*Aviso inicial que dá as instruções ao usuário */
+        /* Aviso inicial que dá as instruções ao usuário */
 
+        let dx;
+        let px;
+        let vel;
+        let obj;
+        let temp;
+        let img;
+        // Variáveis do tipo let para poder definir a movimentação, posição e velocidade da div, além do imagem e tempo para a locomoção
 
-        document.addEventListener("keydown", (event) => {
-            const sailor = document.getElementById("sailor");
-            const sailorImg = sailor.querySelector("img");
-            const jumbotron = document.querySelector(".jumbotron");
+        function inicia() {
+            obj = document.getElementById("sailor");
+            // Linkei uma variável ao ID da div
 
-            const sailorRect = sailor.getBoundingClientRect();
-            const jumbotronRect = jumbotron.getBoundingClientRect();
+            dx = 0;
+            px = obj.offsetLeft;
+            // Determinei os valores inicialis para cada direção e posição do "jogo" ao ser iniciado no browser
+            // Quis usar a posição central que havia determinado antes com o CSS, então usei offsetLeft, que retorna os valores em pixel do lado esquerdo do elemento html 
+        
 
-            const step = 20; // Pixels para mover
+            vel = 5;
+            // Determinei a velocidade com que a div iria ser movimentar pela jumbotron
 
+            img = obj.querySelector("img");
+            // Linkei a variável ao elemento, essa classe contém a imagem da div que será alterada durante a novimentação.
+            // O uso do querySelector foi devido ao fato de que é preciso pegar o primeiro elemento img dentro da div sailor
+
+            document.addEventListener("keydown", teclaDw);
+            document.addEventListener("keyup", teclaUp);
+            // Criei eventos para cada vez que a tecla for pressionada (teclaDw) ou liberada (teclaUp), por meio de um addEventListener, que chama um evento quando um comando específico acontece, nesse caso o aperto ou não das teclas delimitadas mais a frente
+
+            temp = setInterval(enterFrame, 20);
+            // O setInterval me permite utilizar uma função repetidas vezes em um intervalo de tempo, dei um nome a função que desejo repetir e determinei o tempo para a repetição 
+        }   
+
+        function teclaDw(event) {
             switch (event.key) {
-                case "ArrowRight":
-                    if (sailorRect.right + step > jumbotronRect.right) {
-                        // Mover para o lado esquerdo
-                        sailor.style.left = "0px";
-                    } else {
-                        sailor.style.left = `${sailor.offsetLeft + step}px`;
-                    }
-                    sailorImg.src = "img/sailor-d.png"; // Imagem para direita
-                    break;
-
                 case "ArrowLeft":
-                    if (sailorRect.left - step < jumbotronRect.left) {
-                        // Mover para o lado direito
-                        sailor.style.left = `${jumbotronRect.width - sailorRect.width}px`;
-                    } else {
-                        sailor.style.left = `${sailor.offsetLeft - step}px`;
-                    }
-                    sailorImg.src = "img/sailor.png"; // Imagem para esquerda
+                    dx = -1;
+                    img.src = "img/sailor.png";
+                    break;
+                case "ArrowRight":
+                    dx = 1;
+                    img.src = "img/sailor-d.png";
                     break;
             }
-        });
- 
+
+        }
+
+        // A função teclaDw dita os eventos que irão ocorrer quando uma tecla for pressionada. No caso, eu delimitei para o uso da flecha direita/esquerda. Adicionei (direita) ou subtrai (esquerda) da direção dependendo da tecla e também fiz a alteração da imagem de acordo com a direção selecionada.
+        // Optei pelo Switch devido ao fato de serem opções muito específicas para controlar a movimentação
+
+        function teclaUp(event) {
+            if (event.key == "ArrowLeft" || event.key == "ArrowRight") {
+                dx = 0;
+                img.src = "img/sailor-f-c.png";
+            }
+        }    
+
+        // A função teclaUp determina o comportamento que a div irá ter quando nenhuma das teclas antes definidas for selecionada. 
+        // Determinei a direção como 0, já que a div está estática e alterei a imagem, para que ela assumisse a mesma do início do jogo
+
+        function enterFrame () {
+            px += dx * vel;
+
+            if(px < 0) {
+                px = window.innerWidth;
+            } else if (px > window.innerWidth) {
+                px = 0;
+            }
+
+            obj.style.left = px + "px";
+            // Vai atualizando a posição mas no CSS, a cada nova movimentação da Sailor
+        }
+
+        // A função enterFrame é o "coração" do jogo, é a função que será executada no setInterval, ou seja, a que vai ser repetida diversas vezes durante um intervalo de tempo já definido no início da tag script
+        // É feita uma soma da posição com a direção, vezes a velocidade, traduzindo, a posição será sempre atualizada com essas condernadas que ditam a posição atualizada da Sailor a cada tecla pressionada
+        // Delimitei o limite que poderia ser utilizado para a movimentação da div, eu quis usar o próprio limite do navegador, por isso o comando window.innerWidth 
+        // Também ditei o comportamento para que o caminho fosse "reiniciado". Quando o limite do width for ultrapassado, a div será jogada para a posição 0, ou seja, o lado oposto ao qual ela estava, a outra extremidade (que aqui no caso é o lado esquerdo)
+
+
+        window.addEventListener("load", inicia);
+        // Inicia a função quando a página for carregada, fará isso repetidas vezes conforme a página for reiniciada
+
     </script>
 
     <!-- Cntrl + ; transforma a linha em um comentário-->
@@ -131,9 +177,15 @@
         </div>
     </div>
 
+    <!--A jumbotron onde a sailor irá se movimentar
+    A id Sailor que irá se mover durante a execução do "jogo"
+    A imagem que será modificada conforme a movimentação selecionada -->
+
     <div class="logo">
         <img class="loguinho" src="img/download (7).png" alt="logo da Sailor">
     </div>
+
+    <!-- Quis enfeitar um tico então escolhi um logo da deixar embaixo do joguinho, é apenas um adereço -->
 
 </body>
 
