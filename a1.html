@@ -28,22 +28,22 @@
         /* Edição da título do site*/
 
         .jumbotron {
+            position: relative;
             background-color: #fd94b585;
             height: 350px;
             width: 1780px;
             border-radius: 15px;
             margin-left: 10px;
             margin-right: 10px;
-            justify-items: center;
         }
 
         /* Edição do retângulo ao redor da Sailor, ele delimita o espaço onde a mesma pode caminhar */
 
         .img {
-            margin-top: 100px;
+            margin-top: 50px;
         }
 
-        /* Centralizei mais a imagem a sailor dentro da jumbotron */
+        /* Centralizei mais a imagem da sailor dentro da jumbotron */
 
         .logo {
             position: fixed;
@@ -62,16 +62,16 @@
 
         /* Alterei o tamanho da figura de logo*/
 
+        
         #sailor {
             position: absolute;
             top: 50%; 
             left: 50%; 
             transform: translate(-50%, -50%);
-            width: 1000px;
-            height: 100px;
-        }
+        } 
 
-        /* Centralizei a div e delimitei um tamanho*/
+        /* Centralizei a div e delimitei um tamanho para poder percorrer com a Sailor, tanto para a direita quanto para a esquerda */
+
 
     </style>
 
@@ -81,15 +81,40 @@
 
         /*Aviso inicial que dá as instruções ao usuário */
 
-        const sailor = document.getElementById("sailor");
-        
-        /* Criei uma variável que vai conter a div onde a imagem da sailor está dentro. Ela foi criada como constante, então não pode ser alterada */
 
-        let positionX = 50;
-        let positionY = 50;
+        document.addEventListener("keydown", (event) => {
+            const sailor = document.getElementById("sailor");
+            const sailorImg = sailor.querySelector("img");
+            const jumbotron = document.querySelector(".jumbotron");
 
+            const sailorRect = sailor.getBoundingClientRect();
+            const jumbotronRect = jumbotron.getBoundingClientRect();
 
-    
+            const step = 20; // Pixels para mover
+
+            switch (event.key) {
+                case "ArrowRight":
+                    if (sailorRect.right + step > jumbotronRect.right) {
+                        // Mover para o lado esquerdo
+                        sailor.style.left = "0px";
+                    } else {
+                        sailor.style.left = `${sailor.offsetLeft + step}px`;
+                    }
+                    sailorImg.src = "img/sailor-d.png"; // Imagem para direita
+                    break;
+
+                case "ArrowLeft":
+                    if (sailorRect.left - step < jumbotronRect.left) {
+                        // Mover para o lado direito
+                        sailor.style.left = `${jumbotronRect.width - sailorRect.width}px`;
+                    } else {
+                        sailor.style.left = `${sailor.offsetLeft - step}px`;
+                    }
+                    sailorImg.src = "img/sailor.png"; // Imagem para esquerda
+                    break;
+            }
+        });
+ 
     </script>
 
     <!-- Cntrl + ; transforma a linha em um comentário-->
